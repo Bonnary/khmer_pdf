@@ -15,10 +15,8 @@ import {
   Grid3x3,
   Image,
   Pen,
-  GitCompare,
   Crop,
   Hash,
-  ScanLine,
   Search,
 } from 'lucide-react'
 
@@ -50,7 +48,7 @@ const tools: Tool[] = [
       'Separate one page or a whole set for easy conversion into independent PDF files.',
     icon: <Scissors className="w-8 h-8" />,
     category: ['all', 'organize'],
-    link: '/',
+    link: '/organize/split-pdf',
   },
   {
     name: 'Compress PDF',
@@ -65,20 +63,12 @@ const tools: Tool[] = [
       'Easily convert your PDF files into easy to edit DOC and DOCX documents.',
     icon: <Download className="w-8 h-8" />,
     category: ['all', 'convert'],
-    link: '/',
+    link: '/convert/pdf-to-word',
   },
   {
     name: 'PDF to PowerPoint',
     description:
       'Turn your PDF files into easy to edit PPT and PPTX slideshows.',
-    icon: <Download className="w-8 h-8" />,
-    category: ['all', 'convert'],
-    link: '/',
-  },
-  {
-    name: 'PDF to Excel',
-    description:
-      'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.',
     icon: <Download className="w-8 h-8" />,
     category: ['all', 'convert'],
     link: '/',
@@ -95,14 +85,6 @@ const tools: Tool[] = [
     name: 'PowerPoint to PDF',
     description:
       'Make PPT and PPTX slideshows easy to view by converting them to PDF.',
-    icon: <Upload className="w-8 h-8" />,
-    category: ['all', 'convert'],
-    link: '/',
-  },
-  {
-    name: 'Excel to PDF',
-    description:
-      'Make EXCEL spreadsheets easy to read by converting them to PDF.',
     icon: <Upload className="w-8 h-8" />,
     category: ['all', 'convert'],
     link: '/',
@@ -153,7 +135,7 @@ const tools: Tool[] = [
       'Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!',
     icon: <RefreshCw className="w-8 h-8" />,
     category: ['all', 'organize'],
-    link: '/',
+    link: '/organize/rotate-pdf',
   },
   {
     name: 'Unlock PDF',
@@ -174,10 +156,10 @@ const tools: Tool[] = [
   {
     name: 'Organize PDF',
     description:
-      'Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document.',
+      'Sort pages of your PDF file however you like. Delete PDF pages, rotate PDF pages or add PDF pages to your document.',
     icon: <Grid3x3 className="w-8 h-8" />,
     category: ['all', 'organize'],
-    link: '/',
+    link: '/organize/organize-pdf',
   },
   {
     name: 'Page numbers',
@@ -188,29 +170,12 @@ const tools: Tool[] = [
     link: '/',
   },
   {
-    name: 'Scan to PDF',
-    description:
-      'Capture document scans from your mobile device and send them instantly to your browser.',
-    icon: <ScanLine className="w-8 h-8" />,
-    category: ['all', 'convert'],
-    link: '/',
-  },
-  {
     name: 'OCR PDF',
     description:
       'Easily convert scanned PDF into searchable and selectable documents.',
     icon: <Search className="w-8 h-8" />,
     category: ['all', 'optimize'],
     link: '/optimize/ocr-pdf',
-  },
-  {
-    name: 'Compare PDF',
-    description:
-      'Show a side-by-side document comparison and easily spot changes between different file versions.',
-    icon: <GitCompare className="w-8 h-8" />,
-    badge: 'New',
-    category: ['all', 'edit'],
-    link: '/',
   },
   {
     name: 'Crop PDF',

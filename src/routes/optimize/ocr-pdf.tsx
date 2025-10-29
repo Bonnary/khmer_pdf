@@ -5,6 +5,7 @@ import * as pdfjsLib from 'pdfjs-dist'
 import { FileText, Upload, Download, AlertCircle } from 'lucide-react'
 import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
+import { languages, type Language } from '@/types/ocr-language'
 
 // Set up PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf-js/pdf.worker.mjs`
@@ -12,23 +13,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf-js/pdf.worker.mjs`
 export const Route = createFileRoute('/optimize/ocr-pdf')({
   component: RouteComponent,
 })
-
-type Language = 'eng' | 'chi_sim' | 'khm'
-
-interface LanguageOption {
-  code: Language
-  label: string
-  flag: string
-}
-
-// ! tesseract js support over 100 languages, add more as needed
-// ! please read here for supported languages: https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016
-
-const languages: LanguageOption[] = [
-  { code: 'eng', label: 'English', flag: '🇬🇧' },
-  { code: 'chi_sim', label: 'Chinese - Simplified', flag: '🇨🇳' },
-  { code: 'khm', label: 'Central Khmer', flag: '🇰🇭' },
-]
 
 function RouteComponent() {
   const [file, setFile] = useState<File | null>(null)
@@ -192,13 +176,13 @@ function RouteComponent() {
           <FileText className="size-8" />
           OCR PDF Extractor
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-muted-foreground">
           Extract text from PDF files using Optical Character Recognition
         </p>
       </div>
 
       {/* Language Selection */}
-      <div className="mb-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+      <div className="mb-6 p-6 bg-card rounded-lg shadow-sm border border-border">
         <h2 className="text-lg font-semibold mb-3">Select Languages</h2>
         <div className="flex flex-wrap gap-3">
           {languages.map((lang) => (
@@ -210,8 +194,8 @@ function RouteComponent() {
                 'px-4 py-2 rounded-lg border-2 transition-all duration-200',
                 'flex items-center gap-2 font-medium',
                 selectedLanguages.includes(lang.code)
-                  ? 'bg-blue-500 border-blue-500 text-white hover:bg-blue-600'
-                  : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-400',
+                  ? 'bg-primary border-primary text-primary-foreground hover:bg-primary/90'
+                  : 'bg-card border-border text-card-foreground hover:border-primary',
                 isProcessing && 'opacity-50 cursor-not-allowed',
               )}
             >
@@ -220,7 +204,7 @@ function RouteComponent() {
             </button>
           ))}
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+        <p className="text-sm text-muted-foreground mt-2">
           {selectedLanguages.length} language
           {selectedLanguages.length !== 1 ? 's' : ''} selected
         </p>
@@ -245,31 +229,27 @@ function RouteComponent() {
             'flex flex-col items-center justify-center gap-3',
             'transition-colors duration-200',
             isProcessing
-              ? 'border-gray-300 bg-gray-50 dark:bg-gray-800 cursor-not-allowed'
-              : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 cursor-pointer',
+              ? 'border-border bg-muted cursor-not-allowed'
+              : 'border-border hover:border-primary hover:bg-primary/5 cursor-pointer',
           )}
         >
-          <Upload className="size-12 text-gray-400" />
+          <Upload className="size-12 text-muted-foreground" />
           <div className="text-center">
-            <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+            <p className="text-lg font-semibold text-foreground">
               {file ? file.name : 'Click to upload PDF'}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              PDF files only
-            </p>
+            <p className="text-sm text-muted-foreground mt-1">PDF files only</p>
           </div>
         </button>
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
-          <AlertCircle className="size-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+        <div className="mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-lg flex items-start gap-3">
+          <AlertCircle className="size-5 text-destructive shrink-0 mt-0.5" />
           <div>
-            <p className="font-semibold text-red-800 dark:text-red-300">
-              Error
-            </p>
-            <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+            <p className="font-semibold text-destructive">Error</p>
+            <p className="text-sm text-destructive/90">{error}</p>
           </div>
         </div>
       )}
@@ -284,8 +264,8 @@ function RouteComponent() {
             'flex items-center justify-center gap-2',
             'transition-colors duration-200',
             !file || isProcessing || selectedLanguages.length === 0
-              ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 text-white',
+              ? 'bg-muted text-muted-foreground cursor-not-allowed'
+              : 'bg-primary hover:bg-primary/90 text-primary-foreground',
           )}
         >
           {isProcessing ? (
@@ -310,8 +290,8 @@ function RouteComponent() {
             'flex items-center justify-center gap-2',
             'transition-colors duration-200',
             !extractedText || isProcessing
-              ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-              : 'bg-green-600 hover:bg-green-700 text-white',
+              ? 'bg-muted text-muted-foreground cursor-not-allowed'
+              : 'bg-accent hover:bg-accent/90 text-accent-foreground',
           )}
         >
           <Download className="size-5" />
@@ -322,13 +302,13 @@ function RouteComponent() {
       {/* Progress Bar */}
       {isProcessing && (
         <div className="mb-6">
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
             <div
-              className="bg-blue-600 h-full transition-all duration-300 rounded-full"
+              className="bg-primary h-full transition-all duration-300 rounded-full"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center mt-2">
+          <p className="text-sm text-muted-foreground text-center mt-2">
             {Math.round(progress)}%
           </p>
         </div>
@@ -336,14 +316,14 @@ function RouteComponent() {
 
       {/* Extracted Text Display */}
       {extractedText && (
-        <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="p-6 bg-card rounded-lg shadow-sm border border-border">
           <h2 className="text-lg font-semibold mb-3">Extracted Text</h2>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 max-h-[600px] overflow-y-auto">
-            <pre className="whitespace-pre-wrap text-sm font-mono text-gray-800 dark:text-gray-200">
+          <div className="bg-muted rounded-lg p-4 max-h-[600px] overflow-y-auto">
+            <pre className="whitespace-pre-wrap text-sm font-mono text-foreground">
               {extractedText}
             </pre>
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-sm text-muted-foreground mt-2">
             {extractedText.length} characters extracted
           </p>
         </div>

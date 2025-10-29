@@ -10,14 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrganizeSplitPdfRouteImport } from './routes/organize/split-pdf'
+import { Route as OrganizeRotatePdfRouteImport } from './routes/organize/rotate-pdf'
+import { Route as OrganizeOrganizePdfRouteImport } from './routes/organize/organize-pdf'
 import { Route as OrganizeMergePdfRouteImport } from './routes/organize/merge-pdf'
 import { Route as OptimizeOcrPdfRouteImport } from './routes/optimize/ocr-pdf'
 import { Route as OptimizeCompressPdfRouteImport } from './routes/optimize/compress-pdf'
 import { Route as EditEditPdfRouteImport } from './routes/edit/edit-pdf'
+import { Route as ConvertPdfToWordRouteImport } from './routes/convert/pdf-to-word'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizeSplitPdfRoute = OrganizeSplitPdfRouteImport.update({
+  id: '/organize/split-pdf',
+  path: '/organize/split-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizeRotatePdfRoute = OrganizeRotatePdfRouteImport.update({
+  id: '/organize/rotate-pdf',
+  path: '/organize/rotate-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizeOrganizePdfRoute = OrganizeOrganizePdfRouteImport.update({
+  id: '/organize/organize-pdf',
+  path: '/organize/organize-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrganizeMergePdfRoute = OrganizeMergePdfRouteImport.update({
@@ -40,59 +59,92 @@ const EditEditPdfRoute = EditEditPdfRouteImport.update({
   path: '/edit/edit-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConvertPdfToWordRoute = ConvertPdfToWordRouteImport.update({
+  id: '/convert/pdf-to-word',
+  path: '/convert/pdf-to-word',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/convert/pdf-to-word': typeof ConvertPdfToWordRoute
   '/edit/edit-pdf': typeof EditEditPdfRoute
   '/optimize/compress-pdf': typeof OptimizeCompressPdfRoute
   '/optimize/ocr-pdf': typeof OptimizeOcrPdfRoute
   '/organize/merge-pdf': typeof OrganizeMergePdfRoute
+  '/organize/organize-pdf': typeof OrganizeOrganizePdfRoute
+  '/organize/rotate-pdf': typeof OrganizeRotatePdfRoute
+  '/organize/split-pdf': typeof OrganizeSplitPdfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/convert/pdf-to-word': typeof ConvertPdfToWordRoute
   '/edit/edit-pdf': typeof EditEditPdfRoute
   '/optimize/compress-pdf': typeof OptimizeCompressPdfRoute
   '/optimize/ocr-pdf': typeof OptimizeOcrPdfRoute
   '/organize/merge-pdf': typeof OrganizeMergePdfRoute
+  '/organize/organize-pdf': typeof OrganizeOrganizePdfRoute
+  '/organize/rotate-pdf': typeof OrganizeRotatePdfRoute
+  '/organize/split-pdf': typeof OrganizeSplitPdfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/convert/pdf-to-word': typeof ConvertPdfToWordRoute
   '/edit/edit-pdf': typeof EditEditPdfRoute
   '/optimize/compress-pdf': typeof OptimizeCompressPdfRoute
   '/optimize/ocr-pdf': typeof OptimizeOcrPdfRoute
   '/organize/merge-pdf': typeof OrganizeMergePdfRoute
+  '/organize/organize-pdf': typeof OrganizeOrganizePdfRoute
+  '/organize/rotate-pdf': typeof OrganizeRotatePdfRoute
+  '/organize/split-pdf': typeof OrganizeSplitPdfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/convert/pdf-to-word'
     | '/edit/edit-pdf'
     | '/optimize/compress-pdf'
     | '/optimize/ocr-pdf'
     | '/organize/merge-pdf'
+    | '/organize/organize-pdf'
+    | '/organize/rotate-pdf'
+    | '/organize/split-pdf'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/convert/pdf-to-word'
     | '/edit/edit-pdf'
     | '/optimize/compress-pdf'
     | '/optimize/ocr-pdf'
     | '/organize/merge-pdf'
+    | '/organize/organize-pdf'
+    | '/organize/rotate-pdf'
+    | '/organize/split-pdf'
   id:
     | '__root__'
     | '/'
+    | '/convert/pdf-to-word'
     | '/edit/edit-pdf'
     | '/optimize/compress-pdf'
     | '/optimize/ocr-pdf'
     | '/organize/merge-pdf'
+    | '/organize/organize-pdf'
+    | '/organize/rotate-pdf'
+    | '/organize/split-pdf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConvertPdfToWordRoute: typeof ConvertPdfToWordRoute
   EditEditPdfRoute: typeof EditEditPdfRoute
   OptimizeCompressPdfRoute: typeof OptimizeCompressPdfRoute
   OptimizeOcrPdfRoute: typeof OptimizeOcrPdfRoute
   OrganizeMergePdfRoute: typeof OrganizeMergePdfRoute
+  OrganizeOrganizePdfRoute: typeof OrganizeOrganizePdfRoute
+  OrganizeRotatePdfRoute: typeof OrganizeRotatePdfRoute
+  OrganizeSplitPdfRoute: typeof OrganizeSplitPdfRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,6 +154,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organize/split-pdf': {
+      id: '/organize/split-pdf'
+      path: '/organize/split-pdf'
+      fullPath: '/organize/split-pdf'
+      preLoaderRoute: typeof OrganizeSplitPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organize/rotate-pdf': {
+      id: '/organize/rotate-pdf'
+      path: '/organize/rotate-pdf'
+      fullPath: '/organize/rotate-pdf'
+      preLoaderRoute: typeof OrganizeRotatePdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organize/organize-pdf': {
+      id: '/organize/organize-pdf'
+      path: '/organize/organize-pdf'
+      fullPath: '/organize/organize-pdf'
+      preLoaderRoute: typeof OrganizeOrganizePdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/organize/merge-pdf': {
@@ -132,15 +205,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditEditPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/convert/pdf-to-word': {
+      id: '/convert/pdf-to-word'
+      path: '/convert/pdf-to-word'
+      fullPath: '/convert/pdf-to-word'
+      preLoaderRoute: typeof ConvertPdfToWordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConvertPdfToWordRoute: ConvertPdfToWordRoute,
   EditEditPdfRoute: EditEditPdfRoute,
   OptimizeCompressPdfRoute: OptimizeCompressPdfRoute,
   OptimizeOcrPdfRoute: OptimizeOcrPdfRoute,
   OrganizeMergePdfRoute: OrganizeMergePdfRoute,
+  OrganizeOrganizePdfRoute: OrganizeOrganizePdfRoute,
+  OrganizeRotatePdfRoute: OrganizeRotatePdfRoute,
+  OrganizeSplitPdfRoute: OrganizeSplitPdfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
